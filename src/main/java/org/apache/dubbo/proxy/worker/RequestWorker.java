@@ -68,6 +68,7 @@ public class RequestWorker implements Runnable {
         }
         Object result;
         try {
+            // TODO 通过范化调用方式调用dubbo接口
             result = GenericInvoke.genericCall(interfaze,group, version,
                     serviceDefinition.getMethodName(),
                     serviceDefinition.getParamTypes(), serviceDefinition.getParamValues());
@@ -116,6 +117,16 @@ public class RequestWorker implements Runnable {
         return keepAlive;
     }
 
+    /**
+     * TODO 从ZK中获取dubbo接口参数类型列表
+     * @param application
+     * @param interfaze
+     * @param group
+     * @param version
+     * @param methodName
+     * @param paramLen
+     * @return
+     */
     private String[] getTypesFromMetadata(String application, String interfaze, String group, String version, String methodName, int paramLen) {
         MetadataIdentifier identifier = new MetadataIdentifier(interfaze, version, group, Constants.PROVIDER_SIDE, application);
         String metadata = metadataCollector.getProviderMetaData(identifier);

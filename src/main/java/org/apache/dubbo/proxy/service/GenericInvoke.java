@@ -43,13 +43,16 @@ public class GenericInvoke {
             init();
         }
         ReferenceConfig<GenericService> reference;
+        // TODO 创建/获取当前接口对应的ReferenceConfig
         reference = addNewReference(interfaceName, group, version);
 
         try {
+            // TODO 获取范化调用客户端
             GenericService svc = reference.get();
             logger.info("dubbo generic invoke, service is {}, method is {} , paramTypes is {} , paramObjs is {} , svc" +
                             " is {}.", interfaceName
                     , methodName,paramTypes,paramObjs,svc);
+            // TODO 发起调用
             return svc.$invoke(methodName, paramTypes, paramObjs);
         } catch (Exception e) {
             logger.error("Generic invoke failed",e);
